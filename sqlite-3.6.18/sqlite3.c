@@ -73419,13 +73419,13 @@ static int xferOptimization(
 ** is invoked, even for queries.
 */
 SQLITE_API int sqlite3_exec(
-  sqlite3 *db,                /* The database on which the SQL executes */
-  const char *zSql,           /* The SQL to be executed */
-  sqlite3_callback xCallback, /* Invoke this callback routine */
-  void *pArg,                 /* First argument to xCallback() */
-  char **pzErrMsg             /* Write error messages here */
+  sqlite3 *db,                /* The database on which the SQL executes *///一个打开的数据库连接
+  const char *zSql,           /* The SQL to be executed *///要执行的sql语句
+  sqlite3_callback xCallback, /* Invoke this callback routine *///回调函数
+  void *pArg,                 /* First argument to xCallback() *///传递给xCallback的第一个参数
+  char **pzErrMsg             /* Write error messages here *///把错误信息写到pzErrMsg中
 ){
-  int rc = SQLITE_OK;         /* Return code */
+  int rc = SQLITE_OK;         /* Return code *///返回码
   const char *zLeftover;      /* Tail of unprocessed SQL */
   sqlite3_stmt *pStmt = 0;    /* The current SQL statement */
   char **azCols = 0;          /* Names of result columns */

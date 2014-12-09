@@ -8248,6 +8248,9 @@ SQLITE_PRIVATE int sqlite3OsCloseFree(sqlite3_file *);
 ** aDb[1] is the database file used to hold temporary tables.  Additional
 ** databases may be attached.
 */
+/*
+	数据库文件，为每一个
+*/
 struct Db {
   char *zName;         /* Name of this database */
   Btree *pBt;          /* The B*Tree structure for this database file */

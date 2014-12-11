@@ -8248,9 +8248,6 @@ SQLITE_PRIVATE int sqlite3OsCloseFree(sqlite3_file *);
 ** aDb[1] is the database file used to hold temporary tables.  Additional
 ** databases may be attached.
 */
-/*
-	æ•°æ®åº“æ–‡ä»¶ï¼Œä¸ºæ¯ä¸€ä¸
-*/
 struct Db {
   char *zName;         /* Name of this database */
   Btree *pBt;          /* The B*Tree structure for this database file */
@@ -8386,8 +8383,8 @@ struct FuncDefHash {
 */
 struct sqlite3 {
   sqlite3_vfs *pVfs;            /* OS Interface */
-  int nDb;                      /* Number of backends currently in use *///µ±Ç°ºóÌ¨Êý¾Ý¿âµÄÊýÁ¿£¬³õÊ¼»¯Îª2£¬Ò»¸ömain,Ò»¸öÁÙÊ±µÄ
-  Db *aDb;                      /* All backends *///ËùÓÐºóÌ¨£¬db->aDb[0],db-aDb[1]
+  int nDb;                      /* Number of backends currently in use */
+  Db *aDb;                      /* All backends */
   int flags;                    /* Miscellaneous flags. See below */
   int openFlags;                /* Flags passed to sqlite3_vfs.xOpen() */
   int errCode;                  /* Most recent error code (SQLITE_*) */
@@ -8415,9 +8412,9 @@ struct sqlite3 {
   } init;
   int nExtension;               /* Number of loaded extensions */
   void **aExtension;            /* Array of shared library handles */
-  struct Vdbe *pVdbe;           /* List of active virtual machines *///»î¶¯µÄÐéÄâ»úÊýÁ¿
-  int activeVdbeCnt;            /* Number of VDBEs currently executing *///»î¶¯µÄÐéÄâ»úÊýÁ¿
-  int writeVdbeCnt;             /* Number of active VDBEs that are writing *///»î¶¯µÄÕýÔÚÐ´Êý¾Ý¿âµÄÐéÄâ»úµÄÊýÁ¿
+  struct Vdbe *pVdbe;           /* List of active virtual machines */
+  int activeVdbeCnt;            /* Number of VDBEs currently executing */
+  int writeVdbeCnt;             /* Number of active VDBEs that are writing */
   void (*xTrace)(void*,const char*);        /* Trace function */
   void *pTraceArg;                          /* Argument to the trace function */
   void (*xProfile)(void*,const char*,u64);  /* Profiling function */
@@ -73422,13 +73419,13 @@ static int xferOptimization(
 ** is invoked, even for queries.
 */
 SQLITE_API int sqlite3_exec(
-  sqlite3 *db,                /* The database on which the SQL executes *///ä¸€ä¸ªæ‰“å¼€çš„æ•°æ®åº“è¿žæŽ¥
-  const char *zSql,           /* The SQL to be executed *///è¦æ‰§è¡Œçš„sqlè¯­å¥
-  sqlite3_callback xCallback, /* Invoke this callback routine *///å›žè°ƒå‡½æ•°
-  void *pArg,                 /* First argument to xCallback() *///ä¼ é€’ç»™xCallbackçš„ç¬¬ä¸€ä¸ªå‚æ•
-  char **pzErrMsg             /* Write error messages here *///æŠŠé”™è¯¯ä¿¡æ¯å†™åˆ°pzErrMsgä¸
+  sqlite3 *db,                /* The database on which the SQL executes */
+  const char *zSql,           /* The SQL to be executed */
+  sqlite3_callback xCallback, /* Invoke this callback routine */
+  void *pArg,                 /* First argument to xCallback() */
+  char **pzErrMsg             /* Write error messages here */
 ){
-  int rc = SQLITE_OK;         /* Return code *///è¿”å›žç 
+  int rc = SQLITE_OK;         /* Return code */
   const char *zLeftover;      /* Tail of unprocessed SQL */
   sqlite3_stmt *pStmt = 0;    /* The current SQL statement */
   char **azCols = 0;          /* Names of result columns */
